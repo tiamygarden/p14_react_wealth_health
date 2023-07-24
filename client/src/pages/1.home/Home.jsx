@@ -1,6 +1,6 @@
 function Home(props) {
   return (
-    <div className="relative mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-logo bg-contain bg-no-repeat bg-center bg-opacity-10 h-[90vh] ">
+    <div className="relative mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-logo bg-clip-content  bg-no-repeat bg-center bg-opacity-10 h-[90vh] backdrop-blur-sm ">
       <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-90 backdrop-filter backdrop-blur-md rounded-md">
         <h1 className="text-center p-4">HOME</h1>
         <p className="mx-5">

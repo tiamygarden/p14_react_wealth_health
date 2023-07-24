@@ -1,20 +1,34 @@
 import { createPortal } from "react-dom"
-import { forwardRef, useImperativeHandle, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 
 export default forwardRef(({ title, body, footer }, ref) => {
   const [display, setDisplay] = useState(false)
 
   function close() {
-    document.body.style.overflow = "auto"
+    // document.body.style.overflow = "auto"
     setDisplay(false)
   }
 
   function open() {
-    document.body.style.overflow = "hidden"
+    // document.body.style.overflow = "hidden"
     setDisplay(true)
   }
 
   useImperativeHandle(ref, () => ({ open, close }))
+
+  // Utilisation de useEffect pour gérer le défilement du body
+  useEffect(() => {
+    if (display) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "auto"
+    }
+
+    // Nettoie l'effet lors de la fermeture de la modal
+    return () => {
+      document.body.style.overflow = "auto"
+    }
+  }, [display])
 
   return createPortal(
     <div

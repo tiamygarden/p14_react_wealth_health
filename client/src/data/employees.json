@@ -1,0 +1,40 @@
+{
+  "Employees" : [
+    {
+      "id": 1,
+      "firstname": "John",
+      "lastname": "Doe",
+      "starter": "01/01/2010",
+      "department": "IT",
+      "birthdate": "01/01/1980",
+      "street": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10001"
+    },
+    {
+      "id": 2,
+      "firstname": "Jane",
+      "lastname": "Doe",
+      "starter": "01/01/2010",
+      "department": "IT",
+      "birthdate": "01/01/1980",
+      "street": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10001"
+    },
+    {
+      "id": 3,
+      "firstname": "John",
+      "lastname": "Smith",
+      "starter": "01/01/2010",
+      "department": "IT",
+      "birthdate": "01/01/1980",
+      "street": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10001"
+    }
+  ]
+}

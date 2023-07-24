@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { Link } from "react-router-dom"
 import Modal from "../../components/Modal.jsx"
 
@@ -12,9 +12,9 @@ function RegistrationForm() {
   }
 
   return (
-    <div className="relative mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-logo bg-contain bg-no-repeat bg-center bg-opacity-10 h-screen mb-40">
+    <div className="relative mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-logo bg-clip-content  bg-no-repeat bg-center h-screen mb-40 backdrop-blur-md">
       <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-90 backdrop-filter backdrop-blur-md rounded-md">
-        <h1 className="text-center p-4">DIRECTORY</h1>
+        <h1 className="text-center p-4">NEW EMPLOYEE</h1>
         <div className="mb-4">
           <form className="max-w-md mx-auto p-4">
             <label className="block" htmlFor="first-name">
@@ -37,7 +37,7 @@ function RegistrationForm() {
               Date of Birth
               <input
                 className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
-                type="text"
+                type="date"
                 id="date-of-birth"
               />
             </label>
@@ -45,7 +45,7 @@ function RegistrationForm() {
               Start Date
               <input
                 className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
-                type="text"
+                type="date"
                 id="start-date"
               />
             </label>
@@ -74,7 +74,13 @@ function RegistrationForm() {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
                   name="state"
                   id="state"
-                ></select>
+                >
+                  <option>Sales</option>
+                  <option>Marketing</option>
+                  <option>Engineering</option>
+                  <option>Human Resources</option>
+                  <option>Legal</option>
+                </select>
               </label>
               <label className="block mt-4" htmlFor="zip-code">
                 Zip Code
@@ -106,9 +112,13 @@ function RegistrationForm() {
               title="Employee Created!"
               body={
                 <>
-                  <p>
+                  <p className="mx-1">
                     You have successfully created a new employee. Check the{" "}
-                    <Link to="/currentEmployees" className="">
+                    <Link
+                      onClick={() => modalRef.current.close()}
+                      to="/currentEmployees"
+                      className="underline underline-offset-1"
+                    >
                       directory
                     </Link>{" "}
                     to see the new employee
