@@ -1,5 +1,6 @@
 import React from "react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { employees } from "../../data/employees.json"
 
 const CurrentEmployees = () => {
   useEffect(() => {
@@ -54,21 +55,27 @@ const CurrentEmployees = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="border px-4 py-2">John</td>
-                <td className="border px-4 py-2">WOO</td>
-                <td className="border px-4 py-2">01/01/2000</td>
-                <td className="border px-4 py-2">SALE</td>
-                <td className="border px-4 py-2 hidden md:table-cell">
-                  01/01/1975
-                </td>
-                <td className="border px-4 py-2 hidden md:table-cell">
-                  1 RUE DU PUIT
-                </td>
-                <td className="border px-4 py-2">PARIS</td>
-                <td className="border px-4 py-2 hidden md:table-cell">IDF</td>
-                <td className="border px-4 py-2 hidden md:table-cell">75000</td>
-              </tr>
+              {employees.map((employee, id) => (
+                <tr key={employee.id}>
+                  <td className="border px-4 py-2">{employee.firstname}</td>
+                  <td className="border px-4 py-2">{employee.lastname}</td>
+                  <td className="border px-4 py-2">{employee.starter}</td>
+                  <td className="border px-4 py-2">{employee.department}</td>
+                  <td className="border px-4 py-2 hidden md:table-cell">
+                    {employee.birthdate}
+                  </td>
+                  <td className="border px-4 py-2 hidden md:table-cell">
+                    {employee.street}
+                  </td>
+                  <td className="border px-4 py-2">{employee.city}</td>
+                  <td className="border px-4 py-2 hidden md:table-cell">
+                    {employee.state}
+                  </td>
+                  <td className="border px-4 py-2 hidden md:table-cell">
+                    {employee.zip}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <div className="text-sm text-gray-600 mt-2">

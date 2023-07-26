@@ -39,10 +39,10 @@ export default forwardRef(({ title, body, footer }, ref) => {
       onClick={() => close()}
     >
       <div
-        className="w-[450px] min-h-[250px] p-2 bg-white rounded-md shadow-2xl flex flex-col overflow-hidden"
+        className="w-[450px] min-h-[150px] p-2 bg-white rounded-md shadow-2xl flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="mx-auto pb-5 text-2xl">{title}</h3>
+        <h3 className="mx-auto pb-2 text-2xl">{title}</h3>
         <div className="flex flex-wrap flex-grow items-center leading-5 mb-1">
           {body}
         </div>
