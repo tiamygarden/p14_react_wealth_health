@@ -1,18 +1,38 @@
-import React from "react"
+import MainLayout from "../../layouts/MainLayout.jsx"
 import { useEffect, useState } from "react"
 import { employees } from "../../data/employees.json"
+import Pagination from "react-js-pagination"
 
 const CurrentEmployees = () => {
+  const [employeesPerPage, setEmployeesPerPage] = useState(10)
+  const [activePage, setActivePage] = useState(1)
+
   useEffect(() => {
     window.scroll(0, 0)
   }, [])
 
+  // Fonction pour afficher les employés en fonction de la page active
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber)
+  }
+
+  // Calcul du premier et dernier index pour l'affichage des employés
+  const indexOfLastEmployee = activePage * employeesPerPage
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
+  const displayedEmployees = employees.slice(
+    indexOfFirstEmployee,
+    indexOfLastEmployee,
+  )
+
+  // Fonction pour mettre à jour la liste d'employés par page
+  const handlePerPageChange = (event) => {
+    setEmployeesPerPage(parseInt(event.target.value, 10))
+    setActivePage(1) // Revenir à la première page lorsqu'on change le nombre d'employés par page
+  }
+
   return (
-    <div
-      id="employee-div"
-      className="relative h-[90vh] mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-logo bg-clip-content bg-no-repeat bg-center bg-opacity-10 backdrop-blur-sm "
-    >
-      <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-90 backdrop-filter backdrop-blur-md rounded-md overflow-y-hidden">
+    <MainLayout>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h1 className="text-2xl font-bold mb-4">Current Employees</h1>
         <div className="dataTables_wrapper no-footer">
           <div className="flex items-center mb-4">
@@ -21,6 +41,8 @@ const CurrentEmployees = () => {
               name="employee-table_length"
               aria-controls="employee-table"
               className="border rounded px-2 py-1"
+              onChange={handlePerPageChange}
+              value={employeesPerPage}
             >
               <option value="10">10</option>
               <option value="25">25</option>
@@ -55,7 +77,7 @@ const CurrentEmployees = () => {
               </tr>
             </thead>
             <tbody>
-              {employees.map((employee, id) => (
+              {displayedEmployees.map((employee, id) => (
                 <tr key={employee.id}>
                   <td className="border px-4 py-2">{employee.firstname}</td>
                   <td className="border px-4 py-2">{employee.lastname}</td>
@@ -79,16 +101,31 @@ const CurrentEmployees = () => {
             </tbody>
           </table>
           <div className="text-sm text-gray-600 mt-2">
-            Showing 1 to 7 of 7 entries
+            Showing {indexOfFirstEmployee + 1} to{" "}
+            {Math.min(indexOfLastEmployee, employees.length)} of{" "}
+            {employees.length} entries
           </div>
-          <div className="flex mt-4">
+          <div className="flex my-5">
             <a href="/" className="text-blue-500 hover:underline">
               Home
             </a>
           </div>
         </div>
+        {/* Pagination */}
+        {employees.length > employeesPerPage && (
+          <Pagination
+            activePage={activePage}
+            itemsCountPerPage={employeesPerPage}
+            totalItemsCount={employees.length}
+            pageRangeDisplayed={5}
+            onChange={handlePageChange}
+            itemClass="px-2 py-1 border rounded"
+            linkClass="text-blue-500 hover:underline"
+            innerClass="flex justify-center items-center pb-5"
+          />
+        )}
       </div>
-    </div>
+    </MainLayout>
   )
 }
 

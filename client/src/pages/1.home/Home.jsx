@@ -1,7 +1,9 @@
-function Home(props) {
+import MainLayout from "../../layouts/MainLayout.jsx"
+
+function Home() {
   return (
-    <div className="relative mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-logo bg-clip-content  bg-no-repeat bg-center bg-opacity-10 h-[90vh] backdrop-blur-sm ">
-      <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-90 backdrop-filter backdrop-blur-md rounded-md">
+    <MainLayout>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 flex flex-col items-center justify-between pb-[20vh] sm:pb-[56vh] ">
         <h1 className="text-center p-4">HOME</h1>
         <p className="mx-5">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam
@@ -17,7 +19,7 @@ function Home(props) {
           nostrum officia quis similique tempora unde voluptatibus?
         </p>
       </div>
-    </div>
+    </MainLayout>
   )
 }
 

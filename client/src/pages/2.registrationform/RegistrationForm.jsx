@@ -1,3 +1,4 @@
+import MainLayout from "../../layouts/MainLayout.jsx"
 import { useRef } from "react"
 import { Link } from "react-router-dom"
 import Modal from "../../components/Modal.jsx"
@@ -12,11 +13,11 @@ function RegistrationForm() {
   }
 
   return (
-    <div className="relative mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-logo bg-clip-content bg-no-repeat bg-center h-screen backdrop-blur-md">
-      <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-90 backdrop-filter backdrop-blur-md rounded-md">
+    <MainLayout>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h1 className="text-center p-4">NEW EMPLOYEE</h1>
-        <div className="mb-4 md:flex md:justify-between pb-24 md:pb-0">
-          <form className="mx-auto p-4 space-y-4 md:flex md:flex-wrap md:w-full md:mx-0 md:items-baseline md:justify-between ">
+        <div className="mb-1 md:flex md:justify-between pb-0">
+          <form className="mx-auto p-4 space-y-4 md:flex md:flex-wrap md:w-full md:mx-0 md:items-baseline md:justify-between">
             <div className="md:w-1/2 md:pr-4 md:flex md:flex-col gap-[40px]">
               <fieldset className="border w-full border-gray-300 rounded-md p-4 ">
                 <legend className="mb-2 font-medium">Identity</legend>
@@ -111,39 +112,37 @@ function RegistrationForm() {
                 </select>
               </label>
             </div>
-            <div className="md:w-full md:mb-4 flex justify-center ">
-              <button
-                type="button"
-                onClick={() => save()}
-                className="bg-stone-400 p-2 px-4 rounded-md text-stone-50"
-              >
-                Save
-              </button>
-            </div>
-            <Modal
-              ref={modalRef}
-              title="Employee Created!"
-              body={
-                <>
-                  <p className="mx-1">
-                    You have successfully created a new employee. Check the{" "}
-                    <Link
-                      onClick={() => modalRef.current.close()}
-                      to="/currentEmployees"
-                      className="underline underline-offset-1"
-                    >
-                      directory
-                    </Link>{" "}
-                    to see the new employee
-                  </p>
-                </>
-              }
-              footer={""}
-            />
           </form>
         </div>
+        <div className="md:w-full pb-[5vh] sm:pb-[16vh] flex justify-center">
+          <button
+            type="button"
+            onClick={() => save()}
+            className="bg-stone-400 p-2 px-4 rounded-md text-stone-50"
+          >
+            Save
+          </button>
+        </div>
+        <Modal
+          ref={modalRef}
+          title="Employee Created!"
+          footer={""}
+          body={
+            <p className="mx-1">
+              You have successfully created a new employee. Check the{" "}
+              <Link
+                onClick={() => modalRef.current.close()}
+                to="/currentEmployees"
+                className="underline underline-offset-1"
+              >
+                directory
+              </Link>{" "}
+              to see the new employee
+            </p>
+          }
+        />
       </div>
-    </div>
+    </MainLayout>
   )
 }
 
