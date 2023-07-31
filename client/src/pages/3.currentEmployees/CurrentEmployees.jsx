@@ -6,8 +6,18 @@ import Pagination from "react-js-pagination"
 const CurrentEmployees = () => {
   const [employeesPerPage, setEmployeesPerPage] = useState(10)
   const [activePage, setActivePage] = useState(1)
+  const [storedEmployees, setStoredEmployees] = useState([])
 
   useEffect(() => {
+    // Récupérer les employés depuis le local storage lors du chargement du composant
+    const storedEmployeesData = JSON.parse(localStorage.getItem("employees"))
+    setStoredEmployees(storedEmployeesData || [])
+
+    // Fusionner les employés du fichier JSON avec ceux du local storage
+    const mergedEmployees = mergeEmployees(employees, storedEmployeesData)
+    setStoredEmployees(mergedEmployees)
+
+    // Remettre à zéro le défilement de la page
     window.scroll(0, 0)
   }, [])
 
@@ -16,10 +26,25 @@ const CurrentEmployees = () => {
     setActivePage(pageNumber)
   }
 
+  // Fonction pour fusionner les employés du fichier JSON avec ceux du local storage
+  const mergeEmployees = (jsonEmployees, localEmployees) => {
+    const merged = [...jsonEmployees]
+    localEmployees.forEach((localEmployee) => {
+      if (
+        !jsonEmployees.some(
+          (jsonEmployee) => jsonEmployee.id === localEmployee.id,
+        )
+      ) {
+        merged.push(localEmployee)
+      }
+    })
+    return merged
+  }
+
   // Calcul du premier et dernier index pour l'affichage des employés
   const indexOfLastEmployee = activePage * employeesPerPage
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
-  const displayedEmployees = employees.slice(
+  const displayedEmployees = storedEmployees.slice(
     indexOfFirstEmployee,
     indexOfLastEmployee,
   )
@@ -29,7 +54,6 @@ const CurrentEmployees = () => {
     setEmployeesPerPage(parseInt(event.target.value, 10))
     setActivePage(1) // Revenir à la première page lorsqu'on change le nombre d'employés par page
   }
-
   return (
     <MainLayout>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

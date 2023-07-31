@@ -7,7 +7,37 @@ function RegistrationForm() {
   const modalRef = useRef()
 
   async function save() {
-    // do save
+    const firstname = document.getElementById("firstname").value
+    const lastname = document.getElementById("lastname").value
+    const birthdate = document.getElementById("birthdate").value
+    const starter = document.getElementById("starter").value
+    const street = document.getElementById("street").value
+    const city = document.getElementById("city").value
+    const state = document.getElementById("state").value
+    const zip = document.getElementById("zip").value
+    const department = document.getElementById("department").value
+
+    const newEmployee = {
+      firstname,
+      lastname,
+      birthdate,
+      starter,
+      street,
+      city,
+      state,
+      zip,
+      department,
+    }
+
+    // Récupération des employés actuels depuis le local storage
+    const employeesFromStorage =
+      JSON.parse(localStorage.getItem("employees")) || []
+
+    // Ajout du nouvel employé à la liste des employés
+    employeesFromStorage.push(newEmployee)
+
+    // Sauvegarde de la liste mise à jour dans le local storage
+    localStorage.setItem("employees", JSON.stringify(employeesFromStorage))
 
     modalRef.current.open()
   }
@@ -21,37 +51,37 @@ function RegistrationForm() {
             <div className="md:w-1/2 md:pr-4 md:flex md:flex-col gap-[40px]">
               <fieldset className="border w-full border-gray-300 rounded-md p-4 ">
                 <legend className="mb-2 font-medium">Identity</legend>
-                <label className="block" htmlFor="first-name">
+                <label className="block" htmlFor="firstname">
                   First Name
                   <input
                     className="w-full h-10 px-3 border border-gray-300 rounded"
                     type="text"
-                    id="first-name"
+                    id="firstname"
                   />
                 </label>
-                <label className="block mt-4" htmlFor="last-name">
+                <label className="block mt-4" htmlFor="lastname">
                   Last Name
                   <input
                     className="w-full h-10 px-3 border border-gray-300 rounded"
                     type="text"
-                    id="last-name"
+                    id="lastname"
                   />
                 </label>
-                <label className="block mt-4" htmlFor="date-of-birth">
+                <label className="block mt-4" htmlFor="birthdate">
                   Date of Birth
                   <input
                     className="w-full h-10 px-3 border border-gray-300 rounded"
                     type="date"
-                    id="date-of-birth"
+                    id="birthdate"
                   />
                 </label>
               </fieldset>
-              <label className="block mt-6" htmlFor="start-date">
+              <label className="block mt-6" htmlFor="starter">
                 Start Date
                 <input
                   className="w-full h-10 px-3 border border-gray-300 rounded"
                   type="date"
-                  id="start-date"
+                  id="starter"
                 />
               </label>
             </div>
@@ -88,12 +118,12 @@ function RegistrationForm() {
                     <option>Legal</option>
                   </select>
                 </label>
-                <label className="block mt-4" htmlFor="zip-code">
+                <label className="block mt-4" htmlFor="zip">
                   Zip Code
                   <input
                     className="w-full h-8 px-3 border border-gray-300 rounded"
                     type="number"
-                    id="zip-code"
+                    id="zip"
                   />
                 </label>
               </fieldset>
