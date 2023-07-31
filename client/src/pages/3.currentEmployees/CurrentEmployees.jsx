@@ -7,26 +7,19 @@ const CurrentEmployees = () => {
   const [employeesPerPage, setEmployeesPerPage] = useState(10)
   const [activePage, setActivePage] = useState(1)
   const [storedEmployees, setStoredEmployees] = useState([])
+  const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
     // Récupérer les employés depuis le local storage lors du chargement du composant
     const storedEmployeesData = JSON.parse(localStorage.getItem("employees"))
-    setStoredEmployees(storedEmployeesData || [])
 
-    // Fusionner les employés du fichier JSON avec ceux du local storage
+    // Merge jsonEmployees and storedEmployeesData
     const mergedEmployees = mergeEmployees(jsonEmployees, storedEmployeesData)
+    setStoredEmployees(mergedEmployees)
 
     // Remettre à zéro le défilement de la page
     window.scroll(0, 0)
   }, [])
-
-  // Fonction pour afficher les employés en fonction de la page active
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber)
-  }
-
-  // Calcul du nombre total d'employés (combinant ceux du fichier JSON et ceux du localStorage)
-  const totalEmployees = jsonEmployees.length + storedEmployees.length
 
   // Fonction pour fusionner les employés du fichier JSON avec ceux du local storage
   const mergeEmployees = (jsonEmployees, localEmployees) => {
@@ -45,18 +38,40 @@ const CurrentEmployees = () => {
     return merged
   }
 
-  // Calcul du premier et dernier index pour l'affichage des employés
-  const indexOfLastEmployee = activePage * employeesPerPage
-  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
-  const displayedEmployees = [...storedEmployees, ...jsonEmployees].slice(
-    indexOfFirstEmployee,
-    indexOfLastEmployee,
-  )
-
   // Fonction pour mettre à jour la liste d'employés par page
   const handlePerPageChange = (event) => {
     setEmployeesPerPage(parseInt(event.target.value, 10))
     setActivePage(1) // Revenir à la première page lorsqu'on change le nombre d'employés par page
+  }
+
+  // Calcul du premier et dernier index pour l'affichage des employés
+  const indexOfLastEmployee = activePage * employeesPerPage
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
+
+  // Filtrer les employés en fonction de la recherche de l'utilisateur
+  const filteredEmployees = storedEmployees.filter((employee) => {
+    const fullName = `${employee.firstname} ${employee.lastname}`
+    return fullName.toLowerCase().includes(searchQuery.toLowerCase())
+  })
+
+  // Récupérer les employés à afficher pour la page active
+  const displayedEmployees = filteredEmployees.slice(
+    indexOfFirstEmployee,
+    indexOfLastEmployee,
+  )
+
+  // Fonction pour mettre à jour la recherche en fonction de l'input de l'utilisateur
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value)
+    setActivePage(1) // Revenir à la première page lorsqu'on modifie la recherche
+  }
+
+  // Calcul du nombre total d'employés après filtrage
+  const totalEmployees = filteredEmployees.length
+
+  // Fonction pour afficher les employés en fonction de la page active
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber)
   }
 
   return (
@@ -87,6 +102,8 @@ const CurrentEmployees = () => {
               className="border rounded px-2 py-1"
               placeholder=""
               aria-controls="employee-table"
+              onChange={handleSearchChange} // Call handleSearchChange when the user types in the input
+              value={searchQuery} // Bind the input value to the searchQuery state
             />
           </div>
           <table className="table-auto min-w-full mx-0 text-sm md:text-base lg:text-lg">
@@ -106,8 +123,8 @@ const CurrentEmployees = () => {
               </tr>
             </thead>
             <tbody>
-              {displayedEmployees.map((employee, id) => (
-                <tr key={employee.id}>
+              {displayedEmployees.map((employee, index) => (
+                <tr key={index}>
                   <td className="border px-4 py-2">{employee.firstname}</td>
                   <td className="border px-4 py-2">{employee.lastname}</td>
                   <td className="border px-4 py-2">{employee.starter}</td>
