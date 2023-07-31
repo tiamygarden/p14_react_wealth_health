@@ -1,6 +1,6 @@
 import MainLayout from "../../layouts/MainLayout.jsx"
 import { useEffect, useState } from "react"
-import { employees } from "../../data/employees.json"
+import { employees as jsonEmployees } from "../../data/employees.json"
 import Pagination from "react-js-pagination"
 
 const CurrentEmployees = () => {
@@ -14,8 +14,7 @@ const CurrentEmployees = () => {
     setStoredEmployees(storedEmployeesData || [])
 
     // Fusionner les employés du fichier JSON avec ceux du local storage
-    const mergedEmployees = mergeEmployees(employees, storedEmployeesData)
-    setStoredEmployees(mergedEmployees)
+    const mergedEmployees = mergeEmployees(jsonEmployees, storedEmployeesData)
 
     // Remettre à zéro le défilement de la page
     window.scroll(0, 0)
@@ -26,25 +25,30 @@ const CurrentEmployees = () => {
     setActivePage(pageNumber)
   }
 
+  // Calcul du nombre total d'employés (combinant ceux du fichier JSON et ceux du localStorage)
+  const totalEmployees = jsonEmployees.length + storedEmployees.length
+
   // Fonction pour fusionner les employés du fichier JSON avec ceux du local storage
   const mergeEmployees = (jsonEmployees, localEmployees) => {
     const merged = [...jsonEmployees]
-    localEmployees.forEach((localEmployee) => {
-      if (
-        !jsonEmployees.some(
-          (jsonEmployee) => jsonEmployee.id === localEmployee.id,
-        )
-      ) {
-        merged.push(localEmployee)
-      }
-    })
+    if (localEmployees) {
+      localEmployees.forEach((localEmployee) => {
+        if (
+          !jsonEmployees.some(
+            (jsonEmployee) => jsonEmployee.id === localEmployee.id,
+          )
+        ) {
+          merged.push(localEmployee)
+        }
+      })
+    }
     return merged
   }
 
   // Calcul du premier et dernier index pour l'affichage des employés
   const indexOfLastEmployee = activePage * employeesPerPage
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
-  const displayedEmployees = storedEmployees.slice(
+  const displayedEmployees = [...storedEmployees, ...jsonEmployees].slice(
     indexOfFirstEmployee,
     indexOfLastEmployee,
   )
@@ -54,6 +58,7 @@ const CurrentEmployees = () => {
     setEmployeesPerPage(parseInt(event.target.value, 10))
     setActivePage(1) // Revenir à la première page lorsqu'on change le nombre d'employés par page
   }
+
   return (
     <MainLayout>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -126,8 +131,8 @@ const CurrentEmployees = () => {
           </table>
           <div className="text-sm text-gray-600 mt-2">
             Showing {indexOfFirstEmployee + 1} to{" "}
-            {Math.min(indexOfLastEmployee, employees.length)} of{" "}
-            {employees.length} entries
+            {Math.min(indexOfLastEmployee, totalEmployees)} of {totalEmployees}{" "}
+            entries
           </div>
           <div className="flex my-5">
             <a href="/" className="text-blue-500 hover:underline">
@@ -136,11 +141,11 @@ const CurrentEmployees = () => {
           </div>
         </div>
         {/* Pagination */}
-        {employees.length > employeesPerPage && (
+        {totalEmployees > employeesPerPage && (
           <Pagination
             activePage={activePage}
             itemsCountPerPage={employeesPerPage}
-            totalItemsCount={employees.length}
+            totalItemsCount={totalEmployees}
             pageRangeDisplayed={5}
             onChange={handlePageChange}
             itemClass="px-2 py-1 border rounded"

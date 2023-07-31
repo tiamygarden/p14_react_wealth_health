@@ -1,33 +1,30 @@
 import MainLayout from "../../layouts/MainLayout.jsx"
-import { useRef } from "react"
+import { useState, useRef } from "react"
 import { Link } from "react-router-dom"
 import Modal from "../../components/Modal.jsx"
 
 function RegistrationForm() {
   const modalRef = useRef()
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    birthdate: "",
+    starter: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    department: "",
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({ ...prevData, [name]: value }))
+  }
 
   async function save() {
-    const firstname = document.getElementById("firstname").value
-    const lastname = document.getElementById("lastname").value
-    const birthdate = document.getElementById("birthdate").value
-    const starter = document.getElementById("starter").value
-    const street = document.getElementById("street").value
-    const city = document.getElementById("city").value
-    const state = document.getElementById("state").value
-    const zip = document.getElementById("zip").value
-    const department = document.getElementById("department").value
-
-    const newEmployee = {
-      firstname,
-      lastname,
-      birthdate,
-      starter,
-      street,
-      city,
-      state,
-      zip,
-      department,
-    }
+    // Création d'un nouvel employé à partir des données du formulaire
+    const newEmployee = { ...formData }
 
     // Récupération des employés actuels depuis le local storage
     const employeesFromStorage =
@@ -57,6 +54,9 @@ function RegistrationForm() {
                     className="w-full h-10 px-3 border border-gray-300 rounded"
                     type="text"
                     id="firstname"
+                    name="firstname"
+                    value={formData.firstname}
+                    onChange={handleChange}
                   />
                 </label>
                 <label className="block mt-4" htmlFor="lastname">
@@ -65,6 +65,9 @@ function RegistrationForm() {
                     className="w-full h-10 px-3 border border-gray-300 rounded"
                     type="text"
                     id="lastname"
+                    name="lastname"
+                    value={formData.lastname}
+                    onChange={handleChange}
                   />
                 </label>
                 <label className="block mt-4" htmlFor="birthdate">
@@ -73,6 +76,9 @@ function RegistrationForm() {
                     className="w-full h-10 px-3 border border-gray-300 rounded"
                     type="date"
                     id="birthdate"
+                    name="birthdate"
+                    value={formData.birthdate}
+                    onChange={handleChange}
                   />
                 </label>
               </fieldset>
@@ -82,6 +88,9 @@ function RegistrationForm() {
                   className="w-full h-10 px-3 border border-gray-300 rounded"
                   type="date"
                   id="starter"
+                  name="starter"
+                  value={formData.starter}
+                  onChange={handleChange}
                 />
               </label>
             </div>
@@ -94,6 +103,9 @@ function RegistrationForm() {
                     className="w-full h-8 px-3 border border-gray-300 rounded"
                     type="text"
                     id="street"
+                    name="street"
+                    value={formData.street}
+                    onChange={handleChange}
                   />
                 </label>
                 <label className="block mt-4" htmlFor="city">
@@ -102,6 +114,9 @@ function RegistrationForm() {
                     className="w-full h-8 px-3 border border-gray-300 rounded"
                     type="text"
                     id="city"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
                   />
                 </label>
                 <label className="block mt-4" htmlFor="state">
@@ -110,6 +125,8 @@ function RegistrationForm() {
                     className="w-full h-8 px-3 border border-gray-300 rounded"
                     name="state"
                     id="state"
+                    value={formData.state}
+                    onChange={handleChange}
                   >
                     <option>Sales</option>
                     <option>Marketing</option>
@@ -124,6 +141,9 @@ function RegistrationForm() {
                     className="w-full h-8 px-3 border border-gray-300 rounded"
                     type="number"
                     id="zip"
+                    name="zip"
+                    value={formData.zip}
+                    onChange={handleChange}
                   />
                 </label>
               </fieldset>
@@ -133,6 +153,8 @@ function RegistrationForm() {
                   className="w-full h-10 border border-gray-300 rounded"
                   name="department"
                   id="department"
+                  value={formData.department}
+                  onChange={handleChange}
                 >
                   <option>Sales</option>
                   <option>Marketing</option>
