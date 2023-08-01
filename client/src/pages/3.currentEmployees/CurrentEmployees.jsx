@@ -8,6 +8,8 @@ const CurrentEmployees = () => {
   const [activePage, setActivePage] = useState(1)
   const [storedEmployees, setStoredEmployees] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
+  const [sortedColumn, setSortedColumn] = useState(null)
+  const [sortDirection, setSortDirection] = useState("asc")
 
   useEffect(() => {
     // Récupérer les employés depuis le local storage lors du chargement du composant
@@ -38,27 +40,57 @@ const CurrentEmployees = () => {
     return merged
   }
 
-  // Fonction pour mettre à jour la liste d'employés par page
-  const handlePerPageChange = (event) => {
-    setEmployeesPerPage(parseInt(event.target.value, 10))
-    setActivePage(1) // Revenir à la première page lorsqu'on change le nombre d'employés par page
-  }
-
-  // Calcul du premier et dernier index pour l'affichage des employés
-  const indexOfLastEmployee = activePage * employeesPerPage
-  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
-
   // Filtrer les employés en fonction de la recherche de l'utilisateur
   const filteredEmployees = storedEmployees.filter((employee) => {
     const fullName = `${employee.firstname} ${employee.lastname}`
     return fullName.toLowerCase().includes(searchQuery.toLowerCase())
   })
 
-  // Récupérer les employés à afficher pour la page active
-  const displayedEmployees = filteredEmployees.slice(
-    indexOfFirstEmployee,
-    indexOfLastEmployee,
-  )
+  // Fonction pour trier les employés en fonction de la colonne et de la direction de tri
+  // Fonction pour trier les employés en fonction de la colonne et de la direction de tri
+  const sortEmployees = (columnName) => {
+    // Si sur la même colonne, basculer la direction de tri
+    const newSortDirection =
+      columnName === sortedColumn && sortDirection === "asc" ? "desc" : "asc"
+    setSortedColumn(columnName)
+    setSortDirection(newSortDirection)
+
+    // Cloner et trier le tableau filtré
+    const sorted = [...filteredEmployees]
+
+    sorted.sort((a, b) => {
+      if (columnName === "starter") {
+        // Tri des dates de début (format : yyyy-mm-dd)
+        const dateA = new Date(a[columnName])
+        const dateB = new Date(b[columnName])
+        return newSortDirection === "asc" ? dateA - dateB : dateB - dateA
+      } else if (columnName === "birthdate") {
+        // Tri des dates de naissance (format : yyyy-mm-dd)
+        const dateA = new Date(a[columnName] || "1970-01-01") // Traiter les dates vides comme 1970-01-01
+        const dateB = new Date(b[columnName] || "1970-01-01")
+        return newSortDirection === "asc" ? dateA - dateB : dateB - dateA
+      } else {
+        // Tri des chaînes de caractères (format : insensible à la casse)
+        const aValue = a[columnName].toLowerCase()
+        const bValue = b[columnName].toLowerCase()
+        if (aValue < bValue) {
+          return newSortDirection === "asc" ? -1 : 1
+        } else if (aValue > bValue) {
+          return newSortDirection === "asc" ? 1 : -1
+        }
+        return 0
+      }
+    })
+
+    // Mettre à jour le tableau filtré trié
+    setStoredEmployees(sorted)
+  }
+
+  // Fonction pour mettre à jour la liste d'employés par page
+  const handlePerPageChange = (event) => {
+    setEmployeesPerPage(parseInt(event.target.value, 10))
+    setActivePage(1) // Revenir à la première page lorsqu'on change le nombre d'employés par page
+  }
 
   // Fonction pour mettre à jour la recherche en fonction de l'input de l'utilisateur
   const handleSearchChange = (event) => {
@@ -68,6 +100,16 @@ const CurrentEmployees = () => {
 
   // Calcul du nombre total d'employés après filtrage
   const totalEmployees = filteredEmployees.length
+
+  // Calcul du premier et dernier index pour l'affichage des employés
+  const indexOfLastEmployee = activePage * employeesPerPage
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
+
+  // Récupérer les employés à afficher pour la page active
+  const employeesToDisplay = filteredEmployees.slice(
+    indexOfFirstEmployee,
+    indexOfLastEmployee,
+  )
 
   // Fonction pour afficher les employés en fonction de la page active
   const handlePageChange = (pageNumber) => {
@@ -109,21 +151,91 @@ const CurrentEmployees = () => {
           <table className="table-auto min-w-full mx-0 text-sm md:text-base lg:text-lg">
             <thead>
               <tr>
-                <th className="px-4 py-2">First Name</th>
-                <th className="px-4 py-2">Last Name</th>
-                <th className="px-4 py-2">Start Date</th>
-                <th className="px-4 py-2">Department</th>
-                <th className="px-4 py-2 hidden md:table-cell">
-                  Date of Birth
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => sortEmployees("firstname")}
+                >
+                  First Name{" "}
+                  {sortedColumn === "firstname" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
                 </th>
-                <th className="px-4 py-2 hidden md:table-cell">Street</th>
-                <th className="px-4 py-2">City</th>
-                <th className="px-4 py-2 hidden md:table-cell">State</th>
-                <th className="px-4 py-2 hidden md:table-cell">Zip Code</th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => sortEmployees("lastname")}
+                >
+                  Last Name{" "}
+                  {sortedColumn === "lastname" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => sortEmployees("starter")}
+                >
+                  Start Date{" "}
+                  {sortedColumn === "starter" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => sortEmployees("department")}
+                >
+                  Department{" "}
+                  {sortedColumn === "department" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
+                <th
+                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
+                  onClick={() => sortEmployees("dob")}
+                >
+                  Date of Birth{" "}
+                  {sortedColumn === "dob" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
+                <th
+                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
+                  onClick={() => sortEmployees("street")}
+                >
+                  Street{" "}
+                  {sortedColumn === "street" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => sortEmployees("city")}
+                >
+                  City{" "}
+                  {sortedColumn === "city" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
+                <th
+                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
+                  onClick={() => sortEmployees("state")}
+                >
+                  State{" "}
+                  {sortedColumn === "state" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
+                <th
+                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
+                  onClick={() => sortEmployees("zip")}
+                >
+                  Zip Code{" "}
+                  {sortedColumn === "zip" && (
+                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                  )}
+                </th>
               </tr>
             </thead>
             <tbody>
-              {displayedEmployees.map((employee, index) => (
+              {employeesToDisplay.map((employee, index) => (
                 <tr key={index}>
                   <td className="border px-4 py-2">{employee.firstname}</td>
                   <td className="border px-4 py-2">{employee.lastname}</td>
