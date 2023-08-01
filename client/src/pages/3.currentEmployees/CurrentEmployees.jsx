@@ -25,18 +25,18 @@ const CurrentEmployees = () => {
 
   // Fonction pour fusionner les employés du fichier JSON avec ceux du local storage
   const mergeEmployees = (jsonEmployees, localEmployees) => {
-    const merged = [...jsonEmployees]
+    let merged = [...jsonEmployees]
     if (localEmployees) {
-      localEmployees.forEach((localEmployee) => {
-        if (
-          !jsonEmployees.some(
-            (jsonEmployee) => jsonEmployee.id === localEmployee.id,
-          )
-        ) {
-          merged.push(localEmployee)
-        }
-      })
+      merged = merged.concat(localEmployees)
     }
+
+    // Trier les employés par date de naissance (birthdate)
+    merged.sort((a, b) => {
+      const dateA = a.birthdate ? new Date(a.birthdate) : new Date("1970-01-01")
+      const dateB = b.birthdate ? new Date(b.birthdate) : new Date("1970-01-01")
+      return dateA - dateB
+    })
+
     return merged
   }
 
@@ -46,7 +46,6 @@ const CurrentEmployees = () => {
     return fullName.toLowerCase().includes(searchQuery.toLowerCase())
   })
 
-  // Fonction pour trier les employés en fonction de la colonne et de la direction de tri
   // Fonction pour trier les employés en fonction de la colonne et de la direction de tri
   const sortEmployees = (columnName) => {
     // Si sur la même colonne, basculer la direction de tri
@@ -66,13 +65,18 @@ const CurrentEmployees = () => {
         return newSortDirection === "asc" ? dateA - dateB : dateB - dateA
       } else if (columnName === "birthdate") {
         // Tri des dates de naissance (format : yyyy-mm-dd)
-        const dateA = new Date(a[columnName] || "1970-01-01") // Traiter les dates vides comme 1970-01-01
-        const dateB = new Date(b[columnName] || "1970-01-01")
+        const dateA = a[columnName] ? new Date(a[columnName]) : null
+        const dateB = b[columnName] ? new Date(b[columnName]) : null
+
+        // Gérer les dates vides ou non définies
+        if (!dateA) return newSortDirection === "asc" ? -1 : 1
+        if (!dateB) return newSortDirection === "asc" ? 1 : -1
+
         return newSortDirection === "asc" ? dateA - dateB : dateB - dateA
       } else {
         // Tri des chaînes de caractères (format : insensible à la casse)
-        const aValue = a[columnName].toLowerCase()
-        const bValue = b[columnName].toLowerCase()
+        const aValue = a[columnName]?.toLowerCase()
+        const bValue = b[columnName]?.toLowerCase()
         if (aValue < bValue) {
           return newSortDirection === "asc" ? -1 : 1
         } else if (aValue > bValue) {
@@ -189,10 +193,10 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => sortEmployees("dob")}
+                  onClick={() => sortEmployees("birthdate")}
                 >
                   Date of Birth{" "}
-                  {sortedColumn === "dob" && (
+                  {sortedColumn === "birthdate" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
