@@ -2,18 +2,20 @@ import { createPortal } from "react-dom"
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 
 export default forwardRef(({ title, body, footer }, ref) => {
+  // Utilisation de useState pour gérer l'affichage de la modal
   const [display, setDisplay] = useState(false)
 
+  // Fonction pour fermer la modal
   function close() {
-    // document.body.style.overflow = "auto"
     setDisplay(false)
   }
 
+  // Fonction pour ouvrir la modal
   function open() {
-    // document.body.style.overflow = "hidden"
     setDisplay(true)
   }
 
+  // Utilisation de useImperativeHandle pour exposer une API impérative à partir d'un composant fonctionnel
   useImperativeHandle(ref, () => ({ open, close }))
 
   // Utilisation de useEffect pour gérer le défilement du body

@@ -2,6 +2,7 @@ import MainLayout from "../../layouts/MainLayout.jsx"
 import { useState, useRef } from "react"
 import { Link } from "react-router-dom"
 import Modal from "../../components/Modal.jsx"
+import { states } from "../../data/states.json"
 
 function RegistrationForm() {
   const modalRef = useRef()
@@ -120,33 +121,38 @@ function RegistrationForm() {
                     onChange={handleChange}
                   />
                 </label>
-                <label className="block mt-4" htmlFor="state">
-                  State
-                  <select
-                    className="w-full h-8 px-3 border border-gray-300 rounded"
-                    name="state"
-                    id="state"
-                    value={formData.state}
-                    onChange={handleChange}
-                  >
-                    <option>Sales</option>
-                    <option>Marketing</option>
-                    <option>Engineering</option>
-                    <option>Human Resources</option>
-                    <option>Legal</option>
-                  </select>
-                </label>
-                <label className="block mt-4" htmlFor="zip">
-                  Zip Code
-                  <input
-                    className="w-full h-8 px-3 border border-gray-300 rounded"
-                    type="number"
-                    id="zip"
-                    name="zip"
-                    value={formData.zip}
-                    onChange={handleChange}
-                  />
-                </label>
+                <>
+                  <label className="block mt-4" htmlFor="state">
+                    State
+                    <select
+                      className="w-full h-8 px-3 border border-gray-300 rounded"
+                      name="state"
+                      id="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                    >
+                      {states.map((state) => (
+                        <option
+                          key={state.abbreviation}
+                          value={state.abbreviation}
+                        >
+                          {state.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="block mt-4" htmlFor="zip">
+                    Zip Code
+                    <input
+                      className="w-full h-8 px-3 border border-gray-300 rounded"
+                      type="number"
+                      id="zip"
+                      name="zip"
+                      value={formData.zip}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </>
               </fieldset>
               <label className="w-full block mt-4 pb-5" htmlFor="department">
                 Department
