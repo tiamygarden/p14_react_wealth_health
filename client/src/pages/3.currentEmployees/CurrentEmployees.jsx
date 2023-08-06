@@ -15,27 +15,27 @@ const CurrentEmployees = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const [sortedColumn, setSortedColumn] = useState(null)
   const [sortDirection, setSortDirection] = useState("asc")
-  const [mergedData, setMergedData] = useState([]) // New state for merged data
+  const [mergedData, setMergedData] = useState([]) // Nouveau state pour stocker les données fusionnées
 
   useEffect(() => {
-    // Récupérer les employés depuis le local storage lors du chargement du composant
+    // Récupère les employés depuis le local storage lors du chargement du composant
     const storedEmployeesData = JSON.parse(localStorage.getItem("employees"))
 
-    // Merge jsonEmployees and storedEmployeesData
+    // Fusion de jsonEmployees et storedEmployeesData sur le localStorage
     const mergedEmployees = mergeEmployees(jsonEmployees, storedEmployeesData)
     setStoredEmployees(mergedEmployees)
-    setMergedData(mergedEmployees) // Store merged data in a separate state
+    setMergedData(mergedEmployees) // Stock les données fusionnées dans le state mergedData
 
-    // Remettre à zéro le défilement de la page
+    // Remet à zéro le défilement de la page
     window.scroll(0, 0)
   }, [])
 
   // Fonction pour mettre à jour la liste d'employés par page
   const handlePerPageChange = (event) => {
     setEmployeesPerPage(parseInt(event.target.value, 10))
-    setActivePage(1) // Revenir à la première page lorsqu'on change le nombre d'employés par page
+    setActivePage(1) // Reviens à la première page lorsqu'on change le nombre d'employés par page
 
-    // Calculate filtered employees with the new employeesPerPage value
+    // Calcul les employées filtré avec la nouvelle valeur d'employés par page
     const filteredEmployees = filterEmployees(storedEmployees, searchQuery)
     setStoredEmployees(filteredEmployees)
   }
@@ -44,29 +44,29 @@ const CurrentEmployees = () => {
   const handleSearchChange = (event) => {
     const searchValue = event.target.value
     setSearchQuery(searchValue)
-    setActivePage(1) // Revenir à la première page lorsqu'on modifie la recherche
+    setActivePage(1) // Reviens à la première page lorsqu'on modifie la recherche
 
     if (searchValue === "") {
-      // If the search query is empty, reset the list to the merged employees
+      // Si la requête de recherche est vide, réinitialise la liste aux employés fusionnés
       setStoredEmployees(mergedData)
     } else {
-      // Calculate filtered employees with the new searchQuery value
+      // Calcul les employés filtrés avec la nouvelle valeur de requête de recherche
       const filteredEmployees = filterEmployees(storedEmployees, searchValue)
       setStoredEmployees(filteredEmployees)
     }
   }
 
-  // Récupérer les employés à afficher pour la page active
+  // Récupère les employés à afficher pour la page active
   const indexOfLastEmployee = activePage * employeesPerPage
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage
 
-  // Calculate filtered employees based on the current searchQuery and employeesPerPage values
+  // Calcule les employés filtrés en fonction des valeurs requête de recherche et d'employé par page actuelles
   const filteredEmployees = filterEmployees(storedEmployees, searchQuery)
 
-  // Calculate totalEmployees based on the filtered employees
+  // Calcule totalEmployees en fonction des employés filtrés
   const totalEmployees = filteredEmployees.length // Calcul du nombre total d'employés après filtrage
 
-  // Récupérer les employés à afficher pour la page active
+  // Récupère les employés à afficher pour la page active
   const employeesToDisplay = filteredEmployees.slice(
     indexOfFirstEmployee,
     indexOfLastEmployee,
@@ -87,7 +87,7 @@ const CurrentEmployees = () => {
       sortedColumn,
     )
 
-    // Mettre à jour les employés à afficher
+    // Met à jour les employés à afficher
     setStoredEmployees(sorted)
   }
 
@@ -107,8 +107,8 @@ const CurrentEmployees = () => {
               name="employee-table_length"
               aria-controls="employee-table"
               className="border rounded px-2 py-1"
-              onChange={handlePerPageChange}
-              value={employeesPerPage}
+              onChange={handlePerPageChange} // Appel handleSearchChange lorsque l'utilisateur saisit l'entrée
+              value={employeesPerPage} // Lie la valeur d'entrée à l'état employeesPerPage
             >
               <option value="10">10</option>
               <option value="25">25</option>
@@ -124,8 +124,8 @@ const CurrentEmployees = () => {
               className="border rounded px-2 py-1"
               placeholder=""
               aria-controls="employee-table"
-              onChange={handleSearchChange} // Call handleSearchChange when the user types in the input
-              value={searchQuery} // Bind the input value to the searchQuery state
+              onChange={handleSearchChange} // Appel handleSearchChange lorsque l'utilisateur saisit l'entrée
+              value={searchQuery} // Lie la valeur d'entrée à l'état searchQuery
             />
           </div>
           <table className="table-auto min-w-full mx-0 text-sm md:text-base lg:text-lg">
@@ -133,7 +133,7 @@ const CurrentEmployees = () => {
               <tr>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("firstname")}
+                  onClick={() => handleSort("firstname")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   First Name{" "}
                   {sortedColumn === "firstname" && (
@@ -142,7 +142,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("lastname")}
+                  onClick={() => handleSort("lastname")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   Last Name{" "}
                   {sortedColumn === "lastname" && (
@@ -151,7 +151,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("starter")}
+                  onClick={() => handleSort("starter")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   Start Date{" "}
                   {sortedColumn === "starter" && (
@@ -160,7 +160,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("department")}
+                  onClick={() => handleSort("department")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   Department{" "}
                   {sortedColumn === "department" && (
@@ -169,7 +169,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("birthdate")}
+                  onClick={() => handleSort("birthdate")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   Date of Birth{" "}
                   {sortedColumn === "birthdate" && (
@@ -178,7 +178,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("street")}
+                  onClick={() => handleSort("street")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   Street{" "}
                   {sortedColumn === "street" && (
@@ -187,7 +187,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("city")}
+                  onClick={() => handleSort("city")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   City{" "}
                   {sortedColumn === "city" && (
@@ -196,7 +196,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("state")}
+                  onClick={() => handleSort("state")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   State{" "}
                   {sortedColumn === "state" && (
@@ -205,7 +205,7 @@ const CurrentEmployees = () => {
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("zip")}
+                  onClick={() => handleSort("zip")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   Zip Code{" "}
                   {sortedColumn === "zip" && (
@@ -215,33 +215,39 @@ const CurrentEmployees = () => {
               </tr>
             </thead>
             <tbody>
-              {employeesToDisplay.map((employee, index) => (
-                <tr key={index}>
-                  <td className="border px-4 py-2">{employee.firstname}</td>
-                  <td className="border px-4 py-2">{employee.lastname}</td>
-                  <td className="border px-4 py-2">{employee.starter}</td>
-                  <td className="border px-4 py-2">{employee.department}</td>
-                  <td className="border px-4 py-2 hidden md:table-cell">
-                    {employee.birthdate}
-                  </td>
-                  <td className="border px-4 py-2 hidden md:table-cell">
-                    {employee.street}
-                  </td>
-                  <td className="border px-4 py-2">{employee.city}</td>
-                  <td className="border px-4 py-2 hidden md:table-cell">
-                    {employee.state}
-                  </td>
-                  <td className="border px-4 py-2 hidden md:table-cell">
-                    {employee.zip}
-                  </td>
-                </tr>
-              ))}
+              {employeesToDisplay.map(
+                (
+                  employee,
+                  index, // Boucle sur les employés à afficher
+                ) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{employee.firstname}</td>
+                    <td className="border px-4 py-2">{employee.lastname}</td>
+                    <td className="border px-4 py-2">{employee.starter}</td>
+                    <td className="border px-4 py-2">{employee.department}</td>
+                    <td className="border px-4 py-2 hidden md:table-cell">
+                      {employee.birthdate}
+                    </td>
+                    <td className="border px-4 py-2 hidden md:table-cell">
+                      {employee.street}
+                    </td>
+                    <td className="border px-4 py-2">{employee.city}</td>
+                    <td className="border px-4 py-2 hidden md:table-cell">
+                      {employee.state}
+                    </td>
+                    <td className="border px-4 py-2 hidden md:table-cell">
+                      {employee.zip}
+                    </td>
+                  </tr>
+                ),
+              )}
             </tbody>
           </table>
           <div className="text-sm text-gray-600 mt-2">
             Showing {indexOfFirstEmployee + 1} to{" "}
             {Math.min(indexOfLastEmployee, totalEmployees)} of {totalEmployees}{" "}
-            entries
+            {/*// Affiche le nombre d'employés affichés sur le nombre total d'*/}
+            {/*entries*/}
           </div>
           <div className="flex my-5">
             <a href="/" className="text-blue-500 hover:underline">
@@ -250,16 +256,16 @@ const CurrentEmployees = () => {
           </div>
         </div>
         {/* Pagination */}
-        {totalEmployees > employeesPerPage && (
+        {totalEmployees > employeesPerPage && ( // Affiche la pagination uniquement si le nombre d'employés est supérieur au nombre d'employés par page
           <Pagination
             activePage={activePage}
             itemsCountPerPage={employeesPerPage}
             totalItemsCount={totalEmployees}
             pageRangeDisplayed={5}
-            onChange={handlePageChange}
-            itemClass="px-2 py-1 border rounded"
-            linkClass="text-blue-500 hover:underline"
-            innerClass="flex justify-center items-center pb-5"
+            onChange={handlePageChange} // Appel handlePageChange lorsque l'utilisateur clique sur un numéro de page
+            itemClass="px-2 py-1 border rounded" // Ajoute une classe CSS à chaque élément de la pagination
+            linkClass="text-blue-500 hover:underline" // Ajoute une classe CSS aux liens de la pagination
+            innerClass="flex justify-center items-center pb-5" // Ajoute une classe CSS à la pagination
           />
         )}
       </div>
