@@ -1,8 +1,17 @@
 import MainLayout from "../../layouts/MainLayout.jsx"
 
+/**
+ * Composant représentant la page d'accueil.
+ *
+ * Cette page affiche du contenu statique pour présenter l'application.
+ * Elle utilise le composant MainLayout pour définir la mise en page globale.
+ *
+ * @returns {JSX.Element} Le composant de la page d'accueil.
+ */
 function Home() {
   return (
     <MainLayout>
+      {/* Contenu de la page d'accueil */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 flex flex-col items-center justify-between pb-[20vh] sm:pb-[56vh] ">
         <h1 className="text-center p-4">HOME</h1>
         <p className="mx-5">

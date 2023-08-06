@@ -1,0 +1,42 @@
+{
+  "source": {
+    "include": [
+      "./",
+      "README.md",
+      "index.html",
+      "main.jsx",
+      "App.jsX",
+      "src/components/header/Navbar.jsx",
+      "src/components/footer/footer.jsx",
+      "src/layouts/MainLayout.jsx",
+      "src/pages/1.home/Home.jsx",
+      "src/pages/2.registrationForm/RegistrationForm.jsx",
+      "src/pages/3.currentEmployees/CurrentEmployees.jsx",
+      "src/components/Modal.jsx",
+      "src/utils/employeeUtils.js",
+      "src/**/*.js",
+      "src/**/*.css",
+      "src/**/*.json"
+    ],
+    "includePattern": ".jsx?$",
+    "excludePattern": "(node_modules/|dist/)"
+  },
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "recurse": true,
+    "readme": "./README.md"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "default": {
+      "outputSourceFiles": true,
+      "layoutFile": "./node_modules/docdash/layouts/default.hbs",
+      "staticFiles": {
+        "include": ["./node_modules/docdash/static/"]
+      }
+    }
+  }
+}

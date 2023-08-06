@@ -4,6 +4,16 @@ import { Link } from "react-router-dom"
 import Modal from "../../components/Modal.jsx"
 import { states } from "../../data/states.json"
 
+/**
+ * Composant représentant le formulaire d'enregistrement d'un nouvel employé.
+ *
+ * Ce composant affiche un formulaire permettant à l'utilisateur de saisir les informations
+ * d'un nouvel employé. Une fois le formulaire rempli et validé, l'employé est sauvegardé dans
+ * le local storage et une modale de confirmation est affichée.
+ *
+ * @returns {JSX.Element} Le composant du formulaire d'enregistrement.
+ */
+
 function RegistrationForm() {
   const modalRef = useRef()
   const [formData, setFormData] = useState({
@@ -18,12 +28,18 @@ function RegistrationForm() {
     department: "",
   })
 
-  // Gestion des changements dans le formulaire
+  /**
+   * Gère les changements dans le formulaire en mettant à jour l'état du formulaire.
+   *
+   * @param {Event} e L'événement de changement du formulaire.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({ ...prevData, [name]: value }))
   }
-
+  /**
+   * Enregistre les données du formulaire dans le local storage et affiche une modale de confirmation.
+   */
   async function save() {
     // Création d'un nouvel employé à partir des données du formulaire
     const newEmployee = { ...formData }
@@ -38,6 +54,7 @@ function RegistrationForm() {
     // Sauvegarde de la liste mise à jour dans le local storage
     localStorage.setItem("employees", JSON.stringify(employeesFromStorage))
 
+    // Affichage de la modale de confirmation
     modalRef.current.open()
   }
 

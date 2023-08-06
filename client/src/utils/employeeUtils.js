@@ -1,4 +1,9 @@
-// Fonction pour fusionner les employés du fichier JSON avec ceux du local storage
+/**
+ * Fusionne les employés du fichier JSON avec ceux du local storage.
+ * @param {Array} jsonEmployees - Les employés du fichier JSON.
+ * @param {Array} localEmployees - Les employés du local storage.
+ * @returns {Array} Un tableau contenant tous les employés fusionnés et triés par date de naissance.
+ */
 export const mergeEmployees = (jsonEmployees, localEmployees) => {
   let merged = [...jsonEmployees]
   if (localEmployees) {
@@ -15,7 +20,12 @@ export const mergeEmployees = (jsonEmployees, localEmployees) => {
   return merged
 }
 
-// Filtrer les employés en fonction de la recherche de l'utilisateur
+/**
+ * Filtre les employés en fonction de la recherche de l'utilisateur.
+ * @param {Array} storedEmployees - Les employés à filtrer.
+ * @param {string} searchQuery - La chaîne de recherche saisie par l'utilisateur.
+ * @returns {Array} Un tableau contenant les employés filtrés en fonction de la recherche.
+ */
 export const filterEmployees = (storedEmployees, searchQuery) => {
   return storedEmployees.filter((employee) => {
     const fullName = `${employee.firstname} ${employee.lastname}`
@@ -23,7 +33,14 @@ export const filterEmployees = (storedEmployees, searchQuery) => {
   })
 }
 
-// Fonction pour trier les employés en fonction de la colonne et de la direction de tri
+/**
+ * Trie les employés en fonction de la colonne et de la direction de tri.
+ * @param {Array} filteredEmployees - Les employés filtrés à trier.
+ * @param {string} columnName - Le nom de la colonne utilisée pour le tri.
+ * @param {string} sortDirection - La direction de tri ("asc" pour ascendant, "desc" pour descendant).
+ * @param {string} sortedColumn - Le nom de la colonne sur laquelle les employés ont été triés précédemment.
+ * @returns {Array} Un tableau contenant les employés triés en fonction des paramètres de tri.
+ */
 export const sortEmployees = (
   filteredEmployees,
   columnName,

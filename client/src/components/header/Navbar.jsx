@@ -13,6 +13,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
+/**
+ * Composant de la barre de navigation.
+ * Ce composant affiche la barre de navigation avec un logo, des liens de navigation et des éléments de menu pour les notifications et le profil de l'utilisateur.
+ * @returns {JSX.Element} Le composant Navbar.
+ */
 export default function Navbar() {
   const [activePage, setActivePage] = useState("/")
 

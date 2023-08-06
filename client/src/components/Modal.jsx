@@ -1,6 +1,15 @@
 import { createPortal } from "react-dom"
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 
+/**
+ * Composant Modal.
+ * Ce composant représente une modale qui peut être ouverte et fermée à l'aide des fonctions "open" et "close".
+ * @param {object} props - Les props du composant.
+ * @param {string} props.title - Le titre de la modale.
+ * @param {React.ReactNode} props.body - Le contenu de la modale.
+ * @param {React.ReactNode} props.footer - Le contenu du pied de page de la modale (optionnel).
+ * @returns {JSX.Element} Le composant Modal.
+ */
 const Modal = forwardRef(({ title, body, footer }, ref) => {
   // Utilisation de "useState" pour gérer l'affichage de la modale
   const [display, setDisplay] = useState(false)

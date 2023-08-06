@@ -8,6 +8,17 @@ import {
   sortEmployees,
 } from "../../utils/employeeUtils.js"
 
+/**
+ * Composant représentant la liste des employés actuels.
+ *
+ * Ce composant affiche la liste des employés actuels en utilisant des données
+ * provenant du fichier JSON `employees.json` ainsi que celles stockées dans
+ * le local storage. Il permet également de trier et de filtrer les employés, ainsi
+ * que de changer le nombre d'employés affichés par page et de naviguer entre les pages
+ * grâce à la pagination.
+ *
+ * @returns {JSX.Element} Le composant de la liste des employés actuels.
+ */
 const CurrentEmployees = () => {
   const [employeesPerPage, setEmployeesPerPage] = useState(10)
   const [activePage, setActivePage] = useState(1)
@@ -30,7 +41,11 @@ const CurrentEmployees = () => {
     window.scroll(0, 0)
   }, [])
 
-  // Fonction pour mettre à jour la liste d'employés par page
+  /**
+   * Met à jour le nombre d'employés affichés par page en fonction de la sélection de l'utilisateur.
+   *
+   * @param {Event} event L'événement de changement du nombre d'employés par page.
+   */
   const handlePerPageChange = (event) => {
     setEmployeesPerPage(parseInt(event.target.value, 10))
     setActivePage(1) // Reviens à la première page lorsqu'on change le nombre d'employés par page
@@ -40,7 +55,11 @@ const CurrentEmployees = () => {
     setStoredEmployees(filteredEmployees)
   }
 
-  // Fonction pour mettre à jour la recherche en fonction de l'input de l'utilisateur
+  /**
+   * Met à jour la requête de recherche en fonction de l'entrée de l'utilisateur.
+   *
+   * @param {Event} event L'événement de saisie de recherche.
+   */
   const handleSearchChange = (event) => {
     const searchValue = event.target.value
     setSearchQuery(searchValue)
@@ -72,7 +91,11 @@ const CurrentEmployees = () => {
     indexOfLastEmployee,
   )
 
-  // Fonction pour trier les employés en fonction de la colonne et de la direction de tri
+  /**
+   * Trie les employés en fonction de la colonne et de la direction de tri spécifiées par l'utilisateur.
+   *
+   * @param {string} columnName Le nom de la colonne à trier.
+   */
   const handleSort = (columnName) => {
     const newSortDirection =
       columnName === sortedColumn && sortDirection === "asc" ? "desc" : "asc"
@@ -91,7 +114,11 @@ const CurrentEmployees = () => {
     setStoredEmployees(sorted)
   }
 
-  // Fonction pour gérer le changement de page
+  /**
+   * Gère le changement de page de la pagination.
+   *
+   * @param {number} pageNumber Le numéro de page sélectionné par l'utilisateur.
+   */
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber)
   }

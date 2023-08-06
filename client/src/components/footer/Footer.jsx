@@ -1,3 +1,8 @@
+/**
+ * Composant de pied de page de l'application.
+ * Ce composant affiche le pied de page avec les droits d'auteur et les informations de l'entreprise.
+ * @returns {JSX.Element} Le composant Footer.
+ */
 export default function Footer() {
   return (
     <footer className="w-full bg-gray-900">
