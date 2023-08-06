@@ -1,11 +1,10 @@
 {
   "source": {
     "include": [
-      "./",
       "README.md",
       "index.html",
-      "main.jsx",
-      "App.jsX",
+      "src/main.jsx",
+      "src/App.jsx",
       "src/components/header/Navbar.jsx",
       "src/components/footer/footer.jsx",
       "src/layouts/MainLayout.jsx",
@@ -13,10 +12,7 @@
       "src/pages/2.registrationForm/RegistrationForm.jsx",
       "src/pages/3.currentEmployees/CurrentEmployees.jsx",
       "src/components/Modal.jsx",
-      "src/utils/employeeUtils.js",
-      "src/**/*.js",
-      "src/**/*.css",
-      "src/**/*.json"
+      "src/utils/employeeUtils.js"
     ],
     "includePattern": ".jsx?$",
     "excludePattern": "(node_modules/|dist/)"
