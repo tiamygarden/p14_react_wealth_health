@@ -18,7 +18,7 @@ import CurrentEmployees from "./pages/3.currentEmployees/CurrentEmployees.jsx"
  */
 function App() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Utilisation de React Router pour définir les routes de l'application */}
       <Router>
         <Routes>

@@ -12,16 +12,14 @@ import Footer from "../components/footer/Footer"
  */
 const MainLayout = ({ children }) => {
   return (
-    <div className="flex flex-col">
-      <div className="relative">
-        {/* Barre de navigation en haut de la page */}
-        <Navbar />
-        <div className="bg-logo bg-content bg-no-repeat bg-center bg-opacity-30 h-fit min-[80.5vh] backdrop-blur-sm">
-          {/* Contenu principal de la page avec un arrière-plan semi-transparent */}
-          <div className="relative w-full bg-white bg-opacity-90 backdrop-filter rounded-md">
-            {/* Affiche les éléments enfants passés au composant */}
-            {children}
-          </div>
+    <div className="flex flex-col flex-grow">
+      {/* Barre de navigation en haut de la page */}
+      <Navbar />
+      <div className="bg-logo bg-content bg-no-repeat bg-center bg-opacity-30 backdrop-blur-sm flex-grow">
+        {/* Contenu principal de la page avec un arrière-plan semi-transparent */}
+        <div className="relative w-full bg-white bg-opacity-90 backdrop-filter rounded-md">
+          {/* Affiche les éléments enfants passés au composant */}
+          {children}
         </div>
       </div>
       {/* Pied de page en bas de la page */}

@@ -11,12 +11,15 @@ Projet 14 du parcours OpenClassrooms "Développeur Front-End".
 [![CSS3](https://img.shields.io/badge/CSS3-1.0-blue)](https://developer.mozilla.org/fr/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-1.0-yellow)](https://developer.mozilla.org/fr/docs/Web/JavaScript)
 [![Node.js](https://img.shields.io/badge/Node.js-18.16-green)](https://nodejs.org/)
-[![Vite](https://img.shields.io/badge/Vite-4.3-yellow)](https://vitejs.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-4.4.0-yellow)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-18.2-blueviolet)](https://reactjs.org/)
-[![React Router](https://img.shields.io/badge/React_Router-6.11-orange)](https://reactrouter.com/)
-[![React Hook Form](https://img.shields.io/badge/React_Hook_Form-7.43-red)](https://react-hook-form.com/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.2-blue)](https://tailwindcss.com/)
+[![React Router](https://img.shields.io/badge/React_Router-6.14.2-orange)](https://reactrouter.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.3-blue)](https://tailwindcss.com/)
+[![postcss](https://img.shields.io/badge/postcss-8.4.26-yellow)](https://postcss.org/)
+[![eslint](https://img.shields.io/badge/eslint-8.44.0-red)](https://eslint.org/)
+[![prettier](https://img.shields.io/badge/prettier-3.0.0-blueviolet)](https://prettier.io/)
+[![JSDoc](https://img.shields.io/badge/JSDoc-3.7.6-blue)](https://jsdoc.app/)
+[![docdash](https://img.shields.io/badge/docdash-2.0.1-orange)](https://www.npmjs.com/package/docdash)
 
 ## Description
 Ce projet est une application web qui permet de gérer les employés d'une entreprise. L'application permet de créer des employés. L'application permet également de rechercher des employés par nom, prénom, date de naissance, poste et date d'embauche.
@@ -41,12 +44,14 @@ L'application est déployée sur GitHub Pages. Vous pouvez consulter l'applicati
 1. Cloner le référentiel
 
 ```sh
-git clone
+git clone https://github.com/tiamygarden/p14_react_wealth_health.git
 ```
 
 2. Installer les dépendances NPM
 
 ```sh
+cd p14_react_wealth_health
+cd client
 npm install
 ```
 
@@ -56,11 +61,13 @@ npm install
 npm run dev
 ```
 
-4. Ouvrir le fichier `index.html` dans votre navigateur
-5. Ouvrir le fichier `index.html` dans votre éditeur de texte
-6. Modifier le fichier `index.html` pour ajouter votre nom et votre prénom
-7. Enregistrer le fichier `index.html`
-8. Rafraîchir la page dans votre navigateur
+4.Démarrer le serveur backend
+
+```sh
+npm run server
+```
+
+And open the browser at this address : http://localhost:5173/
 
 ## Documentation
 Ce référentiel contient la documentation du projet. La documentation a été générée à l'aide de JSDoc pour les fichiers suivants :
@@ -83,7 +90,7 @@ La documentation a été générée en utilisant JSDoc avec le thème Docdash po
 
 ## Auteur
 
-Tommy REQUILLARD
+[Tommy REQUILLARD](https://github.com/tiamygarden)
 
 ## Licence
 

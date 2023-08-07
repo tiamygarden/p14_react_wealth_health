@@ -97,16 +97,15 @@ const CurrentEmployees = () => {
    * @param {string} columnName Le nom de la colonne à trier.
    */
   const handleSort = (columnName) => {
-    const newSortDirection =
-      columnName === sortedColumn && sortDirection === "asc" ? "desc" : "asc"
+    console.log(columnName, sortDirection)
     setSortedColumn(columnName)
-    setSortDirection(newSortDirection)
+    setSortDirection(sortDirection === "asc" ? "desc" : "asc")
 
     // Tri des employés en utilisant la fonction importée depuis utils/employeeUtils.js
     const sorted = sortEmployees(
       filteredEmployees,
       columnName,
-      newSortDirection,
+      sortDirection,
       sortedColumn,
     )
 
@@ -148,7 +147,7 @@ const CurrentEmployees = () => {
             <label>Search:</label>
             <input
               type="search"
-              className="border rounded px-2 py-1"
+              className="border rounded px-2 py-1 ml-2"
               placeholder=""
               aria-controls="employee-table"
               onChange={handleSearchChange} // Appel handleSearchChange lorsque l'utilisateur saisit l'entrée
