@@ -98,7 +98,9 @@ const CurrentEmployees = () => {
    */
   const handleSort = (columnName) => {
     setSortedColumn(columnName)
-    setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+    setSortDirection((prevDirection) =>
+      prevDirection === "asc" ? "desc" : "asc",
+    )
 
     // Tri des employés en utilisant la fonction importée depuis utils/employeeUtils.js
     const sorted = sortEmployees(
@@ -119,6 +121,47 @@ const CurrentEmployees = () => {
    */
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber)
+  }
+
+  /**
+   * Rend le composant de la liste des employés actuels.
+   * @param columnName
+   * @returns {JSX.Element}
+   */
+  const renderSortIcon = (columnName) => {
+    if (sortedColumn === columnName) {
+      return (
+        <span className={`ml-1 ${sortDirection === "asc" ? "text-xs" : ""}`}>
+          {sortDirection === "asc" ? "▲" : "▼"}
+        </span>
+      )
+    }
+    return <span className={`text-gray-400 text-xs ml-1`}>▼▲</span>
+  }
+
+  const renderTableHeaders = () => {
+    const columns = [
+      "firstname",
+      "lastname",
+      "starter",
+      "department",
+      "birthdate",
+      "street",
+      "city",
+      "state",
+      "zip",
+    ]
+
+    return columns.map((column) => (
+      <th
+        key={column}
+        className="px-4 py-2 cursor-pointer"
+        onClick={() => handleSort(column)}
+      >
+        {column.charAt(0).toUpperCase() + column.slice(1)}{" "}
+        {renderSortIcon(column)}
+      </th>
+    ))
   }
 
   return (
@@ -155,221 +198,7 @@ const CurrentEmployees = () => {
           </div>
           <table className="table-auto min-w-full mx-0 text-sm">
             <thead>
-              <tr>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("firstname")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
-                >
-                  First Name{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "firstname" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "firstname" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "firstname" && (
-                    <span
-                      className={`${
-                        sortDirection === "asc" ? "text-black" : "text-black"
-                      }`}
-                    >
-                      {sortDirection === "asc" ? "▲" : "▼"}
-                    </span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("lastname")}
-                >
-                  Last Name{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "lastname" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "lastname" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "lastname" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("starter")}
-                >
-                  Start Date{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "starter" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "starter" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "starter" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("department")}
-                >
-                  Department{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "department" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "department" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "department" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("birthdate")}
-                >
-                  Date of Birth{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "birthdate" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "birthdate" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "birthdate" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("street")}
-                >
-                  Street{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "street" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "street" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "street" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("city")}
-                >
-                  City{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "city" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "city" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "city" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("state")}
-                >
-                  State{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "state" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "state" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "state" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("zip")}
-                >
-                  Zip Code{" "}
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "zip" ? "hidden" : ""
-                    }`}
-                  >
-                    ▲
-                  </span>
-                  <span
-                    className={`text-gray-400 text-xs ml-1 ${
-                      sortedColumn === "zip" ? "hidden" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                  {sortedColumn === "zip" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-              </tr>
+              <tr>{renderTableHeaders()}</tr>
             </thead>
             <tbody>
               {employeesToDisplay.map(
