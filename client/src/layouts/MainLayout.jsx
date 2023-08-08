@@ -15,12 +15,10 @@ const MainLayout = ({ children }) => {
     <div className="flex flex-col flex-grow">
       {/* Barre de navigation en haut de la page */}
       <Navbar />
-      <div className="bg-logo bg-content bg-no-repeat bg-center bg-opacity-30 backdrop-blur-sm flex-grow">
+      <div className="bg-logo bg-content bg-no-repeat bg-center flex-grow">
         {/* Contenu principal de la page avec un arrière-plan semi-transparent */}
-        <div className="relative w-full bg-white bg-opacity-90 backdrop-filter rounded-md">
-          {/* Affiche les éléments enfants passés au composant */}
-          {children}
-        </div>
+        {/* Affiche les éléments enfants passés au composant */}
+        {children}
       </div>
       {/* Pied de page en bas de la page */}
       <Footer />
