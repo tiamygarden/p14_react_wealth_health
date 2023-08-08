@@ -196,39 +196,37 @@ const CurrentEmployees = () => {
               value={searchQuery} // Lie la valeur d'entrée à l'état searchQuery
             />
           </div>
-          <table className="table-auto min-w-full mx-0 text-sm">
-            <thead>
-              <tr>{renderTableHeaders()}</tr>
-            </thead>
-            <tbody>
-              {employeesToDisplay.map(
-                (
-                  employee,
-                  index, // Boucle sur les employés à afficher
-                ) => (
-                  <tr key={index}>
-                    <td className="border px-4 py-2">{employee.firstname}</td>
-                    <td className="border px-4 py-2">{employee.lastname}</td>
-                    <td className="border px-4 py-2">{employee.starter}</td>
-                    <td className="border px-4 py-2">{employee.department}</td>
-                    <td className="border px-4 py-2 hidden md:table-cell">
-                      {employee.birthdate}
-                    </td>
-                    <td className="border px-4 py-2 hidden md:table-cell">
-                      {employee.street}
-                    </td>
-                    <td className="border px-4 py-2">{employee.city}</td>
-                    <td className="border px-4 py-2 hidden md:table-cell">
-                      {employee.state}
-                    </td>
-                    <td className="border px-4 py-2 hidden md:table-cell">
-                      {employee.zip}
-                    </td>
-                  </tr>
-                ),
-              )}
-            </tbody>
-          </table>
+          <div className="table-responsive overflow-x-auto">
+            <table className="table-auto min-w-full mx-0 text-sm ">
+              <thead>
+                <tr>{renderTableHeaders()}</tr>
+              </thead>
+              <tbody>
+                {employeesToDisplay.map(
+                  (
+                    employee,
+                    index, // Boucle sur les employés à afficher
+                  ) => (
+                    <tr key={index}>
+                      <td className="border px-4 py-2">{employee.firstname}</td>
+                      <td className="border px-4 py-2">{employee.lastname}</td>
+                      <td className="border px-4 py-2">{employee.starter}</td>
+                      <td className="border px-4 py-2">
+                        {employee.department}
+                      </td>
+                      <td className="border px-4 py-2 ">
+                        {employee.birthdate}
+                      </td>
+                      <td className="border px-4 py-2 ">{employee.street}</td>
+                      <td className="border px-4 py-2">{employee.city}</td>
+                      <td className="border px-4 py-2 ">{employee.state}</td>
+                      <td className="border px-4 py-2 ">{employee.zip}</td>
+                    </tr>
+                  ),
+                )}
+              </tbody>
+            </table>
+          </div>
           <div className="text-sm text-gray-600 mt-2">
             Showing {indexOfFirstEmployee + 1} to{" "}
             {Math.min(indexOfLastEmployee, totalEmployees)} of {totalEmployees}{" "}
