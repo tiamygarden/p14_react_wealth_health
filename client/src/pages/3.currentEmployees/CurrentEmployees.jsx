@@ -97,7 +97,6 @@ const CurrentEmployees = () => {
    * @param {string} columnName Le nom de la colonne à trier.
    */
   const handleSort = (columnName) => {
-    console.log(columnName, sortDirection)
     setSortedColumn(columnName)
     setSortDirection(sortDirection === "asc" ? "desc" : "asc")
 
@@ -150,11 +149,11 @@ const CurrentEmployees = () => {
               className="border rounded px-2 py-1 ml-2"
               placeholder=""
               aria-controls="employee-table"
-              onChange={handleSearchChange} // Appel handleSearchChange lorsque l'utilisateur saisit l'entrée
+              onChange={handleSearchChange}
               value={searchQuery} // Lie la valeur d'entrée à l'état searchQuery
             />
           </div>
-          <table className="table-auto min-w-full mx-0 text-sm md:text-base lg:text-lg">
+          <table className="table-auto min-w-full mx-0 text-sm">
             <thead>
               <tr>
                 <th
@@ -162,78 +161,210 @@ const CurrentEmployees = () => {
                   onClick={() => handleSort("firstname")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
                 >
                   First Name{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "firstname" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "firstname" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "firstname" && (
-                    <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
+                    <span
+                      className={`${
+                        sortDirection === "asc" ? "text-black" : "text-black"
+                      }`}
+                    >
+                      {sortDirection === "asc" ? "▲" : "▼"}
+                    </span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("lastname")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("lastname")}
                 >
                   Last Name{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "lastname" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "lastname" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "lastname" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("starter")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("starter")}
                 >
                   Start Date{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "starter" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "starter" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "starter" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("department")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("department")}
                 >
                   Department{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "department" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "department" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "department" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("birthdate")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("birthdate")}
                 >
                   Date of Birth{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "birthdate" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "birthdate" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "birthdate" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("street")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("street")}
                 >
                   Street{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "street" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "street" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "street" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 cursor-pointer"
-                  onClick={() => handleSort("city")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("city")}
                 >
                   City{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "city" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "city" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "city" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("state")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("state")}
                 >
                   State{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "state" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "state" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "state" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
                 </th>
                 <th
                   className="px-4 py-2 hidden md:table-cell cursor-pointer"
-                  onClick={() => handleSort("zip")} // Appel handleSort lorsque l'utilisateur clique sur l'en-tête de colonne
+                  onClick={() => handleSort("zip")}
                 >
                   Zip Code{" "}
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "zip" ? "hidden" : ""
+                    }`}
+                  >
+                    ▲
+                  </span>
+                  <span
+                    className={`text-gray-400 text-xs ml-1 ${
+                      sortedColumn === "zip" ? "hidden" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                   {sortedColumn === "zip" && (
                     <span>{sortDirection === "asc" ? "▲" : "▼"}</span>
                   )}
